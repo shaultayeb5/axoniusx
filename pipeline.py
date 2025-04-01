@@ -13,10 +13,13 @@ def run_pipeline() -> pd.DataFrame:
 
     for i, chunk in enumerate(load_data_streaming()):
         log(f"Processing chunk {i+1}")
-        chunk = validate_data(chunk)
-        chunk = encode_categorical_features(chunk)
-        chunk = normalize_numeric_features(chunk)
-        chunk = select_features(chunk)
+        chunk = (
+            chunk
+            .pipe(validate_data)
+            .pipe(encode_categorical_features)      #fit_partial
+            .pipe(normalize_numeric_features)
+            .pipe(select_features)
+        )
         final_df.append(chunk)
 
     full_df = pd.concat(final_df, ignore_index=True)

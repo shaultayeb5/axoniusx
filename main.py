@@ -3,7 +3,7 @@ from utils import log
 
 def main():
     log("Running pipeline...")
-    df = run_pipeline()
+    df = run_pipeline() #maybe write each chunk separately
     df.to_csv("output/features.csv", index=False)
     log(f"Finished! Processed {len(df)} rows.")
 
